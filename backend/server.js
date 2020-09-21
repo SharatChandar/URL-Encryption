@@ -1,12 +1,13 @@
 const express = require("express");
 const app = express();
 const port = 8080;
+const logger = require("morgan");
 var cors = require("cors");
 var router = express.Router();
 var CryptoJS = require("crypto-js");
 const SECRET = "I am batman";
 app.use(cors());
-
+app.use(logger("dev"));
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
