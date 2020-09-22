@@ -9,7 +9,7 @@ const SECRET = "I am batman";
 class App extends Component {
   constructor(props) {
     super();
-    this.state = { value: "" };
+    this.state = { value: "", size: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,13 +24,16 @@ class App extends Component {
   }
 
   callAPI(data) {
+    var size = new TextEncoder().encode(data).length;
+    this.setState({ size: size });
+
     var info = $("#info2");
     info.val(
       info.val() +
         "\n" +
         moment().format(" HH:mm:ss:SSS") +
         " : " +
-        "Data Entered "
+        "Data Entered"
       // data
     );
     var b64 = CryptoJS.TripleDES.encrypt(data, SECRET).toString();
@@ -57,7 +60,7 @@ class App extends Component {
         "\n" +
         moment().format(" HH:mm:ss:SSS") +
         " : " +
-        "Converting to Hex "
+        "Converting to Hex"
       // eHex
     );
     var URL = "http://localhost:8080/des/" + eHex;
@@ -95,6 +98,14 @@ class App extends Component {
               type="text"
               value={this.state.value}
               onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Input
+              placeholder="Data Size in Bytes"
+              type="text"
+              value={this.state.size}
+              disabled
             />
           </FormGroup>
           <FormGroup>

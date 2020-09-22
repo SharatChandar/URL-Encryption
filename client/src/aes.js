@@ -9,7 +9,7 @@ const SECRET = "I am batman";
 class App extends Component {
   constructor(props) {
     super();
-    this.state = { value: "" };
+    this.state = { value: "", size: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,6 +24,9 @@ class App extends Component {
   }
 
   callAPI(data) {
+    var size = new TextEncoder().encode(data).length;
+    this.setState({ size: size });
+
     var info = $("#info1");
     info.val(
       info.val() +
@@ -95,6 +98,14 @@ class App extends Component {
               type="text"
               value={this.state.value}
               onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Input
+              placeholder="Data Size in Bytes"
+              type="text"
+              value={this.state.size}
+              disabled
             />
           </FormGroup>
           <FormGroup>
